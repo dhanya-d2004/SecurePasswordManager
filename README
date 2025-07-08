@@ -1,0 +1,100 @@
+📌 Project Overview
+The Secure Password Manager is a robust, Java-based desktop application designed to help users securely store, retrieve,
+and manage their sensitive credentials such as usernames and passwords. It uses industry-standard encryption methods to
+ensure that even if the storage files are accessed by unauthorized parties, the credentials remain confidential.
+The primary motivation is to reduce the risk of weak or reused passwords by providing users with a secure, offline vault coupled with strong password generation capabilities.
+
+🌟 Key Features
+✅ Master password protection
+✅ AES-256 encryption of stored passwords
+✅ Salted password hashing using PBKDF2WithHmacSHA256
+✅ Strong random password generation with customizable settings
+✅ Password visibility toggle (show/hide passwords)
+✅ Unauthorized access alert system
+✅ Local file-based storage — no cloud or online dependencies
+✅ Clean, intuitive Swing-based user interface
+
+🔐 Encryption and Security Mechanisms
+➤ Encryption Algorithm:
+AES (Advanced Encryption Standard) with 256-bit key length (AES-256)
+CBC (Cipher Block Chaining) mode
+PKCS5 Padding ensures even-length blocks
+
+➤ Salt:
+A 16-byte randomly generated salt is used in key derivation
+Salt is stored securely in a local .salt file in Base64 format
+
+🛠️ How Encryption Works:
+On first use, a master password is set by the user.
+A random salt is generated or loaded from the .salt file.
+The master password + salt are fed into PBKDF2 to generate a strong symmetric key.
+This key is used for AES encryption/decryption of all stored credentials.
+Encrypted passwords are stored in a serialized file (credentials.dat).
+Without the correct master password, decryption is computationally infeasible.
+
+🧂 Salt (.salt File) and Its Role
+Salt is crucial for defending against dictionary and rainbow table attacks.
+The .salt file is automatically generated and stored in the same directory as the password manager.
+Each installation uses a unique salt.
+Note: If the .salt file is lost, stored data cannot be decrypted.
+
+🏗️ Technology Stack
+Component	                    Details
+Programming Language	    Java 17+
+GUI Framework	            Swing
+Cryptography	            Java Cryptography Extension (JCE)
+Optional Libraries	        Apache Commons Codec (for Base64)
+Storage	Local filesystem    (.dat + .salt files)
+
+💻 Installation & Requirements
+Software Requirements:
+Java JDK 17 or above
+Swing (comes with Java SE)
+Java Cryptography Extension (JCE)
+
+Hardware Requirements:
+2 GB RAM minimum
+100 MB free disk space
+Any OS supporting Java (Windows, MacOS, Linux)
+
+📁 Folder Structure
+passwordmanager/
+├── Credential.java
+├── EncryptionUtil.java
+├── FileHandler.java
+├── PasswordGenerator.java
+├── PasswordManagerSwing.java
+├── credentials.dat
+└── .salt
+
+📝 How to Use
+Compile the project:
+
+bash
+Copy
+Edit
+javac passwordmanager/*.java
+
+Run the application:
+bash
+Copy
+Edit
+java passwordmanager.PasswordManagerSwing
+Set a Master Password on first use.
+Add, view, search, and delete credentials securely.
+Generate passwords using the Password Generator.
+Your data is stored locally in an encrypted format.
+
+🔐 Security Considerations
+Aspect	Implementation
+Encryption	AES-256 in CBC mode
+Key Derivation	PBKDF2WithHmacSHA256 + Salt
+Password Masking	JPasswordField + Show/Hide toggle
+Storage	Encrypted .dat file
+Salt Storage	Separate .salt file
+Alerts	Login alert on incorrect master password
+
+⚠️ Limitations
+No cloud sync (offline only)
+If .salt or credentials.dat is deleted, data is irrecoverable
+Master password recovery is not implemented (for maximum secur
